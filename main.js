@@ -1,13 +1,31 @@
+const productList = [];
 const navEmail = document.querySelector('.navbar-email');
 const desktopMenu = document.querySelector('.desktop-menu');
 const menuHamIcon = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
 const aside = document.querySelector('.product-detail ');
+const cardsContainer = document.querySelector('.cards-container');
 
 navEmail.addEventListener('click', toggleDesktopMenu);
 menuHamIcon.addEventListener('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener('click', toggleCarritoAside);
+
+productList.push({
+	name: 'Bike',
+	price: 250,
+	image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+});
+productList.push({
+	name: 'Pantalla',
+	price: 400,
+	image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+});
+productList.push({
+	name: 'Computador',
+	price: 850,
+	image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+});
 
 function toggleDesktopMenu() {
 	const isAsideClosed = aside.classList.contains('inactive');
@@ -43,3 +61,40 @@ function toggleCarritoAside() {
 
 	aside.classList.toggle('inactive');
 }
+
+function renderProducts(productList) {
+	for (product of productList) {
+		const productCard = document.createElement('div');
+		productCard.classList.add('product-card');
+
+		const productImage = document.createElement('img');
+		productImage.setAttribute('src', product.image);
+		productImage.setAttribute('alt', product.name);
+
+		const productInfo = document.createElement('div');
+		productInfo.classList.add('product-info');
+
+		const productInfoDiv = document.createElement('div');
+
+		const productPrice = document.createElement('p');
+		productPrice.innerText = `$${product.price}`;
+
+		const productName = document.createElement('p');
+		productName.innerHTML = product.name;
+
+		const productInfoFigure = document.createElement('figure');
+		const productImgCart = document.createElement('img');
+		productImgCart.setAttribute('src', './icons/bt_add_to_cart.svg');
+
+		productInfoFigure.appendChild(productImgCart);
+		productInfoDiv.appendChild(productPrice);
+		productInfoDiv.appendChild(productName);
+		productInfo.appendChild(productInfoDiv);
+		productInfo.appendChild(productInfoFigure);
+		productCard.appendChild(productImage);
+		productCard.appendChild(productInfo);
+		cardsContainer.appendChild(productCard);
+	}
+}
+
+renderProducts(productList);
