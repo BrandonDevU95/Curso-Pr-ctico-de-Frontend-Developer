@@ -6,10 +6,13 @@ const mobileMenu = document.querySelector('.mobile-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
 const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 const cardsContainer = document.querySelector('.cards-container');
+const prodyctDetailContainer = document.querySelector('#productDetail');
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
 
 navEmail.addEventListener('click', toggleDesktopMenu);
 menuHamIcon.addEventListener('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener('click', toggleCarritoAside);
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
 
 productList.push({
 	name: 'Bike',
@@ -26,6 +29,15 @@ productList.push({
 	price: 850,
 	image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 });
+
+function openProductDetailAside() {
+	shoppingCartContainer.classList.add('inactive');
+	prodyctDetailContainer.classList.remove('inactive');
+}
+
+function closeProductDetailAside() {
+	prodyctDetailContainer.classList.add('inactive');
+}
 
 function toggleDesktopMenu() {
 	const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
@@ -44,12 +56,16 @@ function toggleMobileMenu() {
 		shoppingCartContainer.classList.toggle('inactive');
 	}
 
+	closeProductDetailAside();
+
 	mobileMenu.classList.toggle('inactive');
 }
 
 function toggleCarritoAside() {
 	const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
 	const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+	const isProductDetailClosed =
+		prodyctDetailContainer.classList.contains('inactive');
 
 	if (!isMobileMenuClosed) {
 		mobileMenu.classList.toggle('inactive');
@@ -57,6 +73,10 @@ function toggleCarritoAside() {
 
 	if (!isDesktopMenuClosed) {
 		desktopMenu.classList.toggle('inactive');
+	}
+
+	if (!isProductDetailClosed) {
+		prodyctDetailContainer.classList.toggle('inactive');
 	}
 
 	shoppingCartContainer.classList.toggle('inactive');
@@ -70,6 +90,7 @@ function renderProducts(productList) {
 		const productImage = document.createElement('img');
 		productImage.setAttribute('src', product.image);
 		productImage.setAttribute('alt', product.name);
+		productImage.addEventListener('click', openProductDetailAside);
 
 		const productInfo = document.createElement('div');
 		productInfo.classList.add('product-info');
